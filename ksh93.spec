@@ -57,6 +57,8 @@ touch lib/package/gen/ast.license.accepted
 rm -f src/cmd/ksh93/Mamfile
 
 %build
+LC_ALL=POSIX; export LC_ALL
+
 # Yes this sucks, but that's the way (I'm too lazy to fix this stuff)
 CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
 CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
