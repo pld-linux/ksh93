@@ -112,6 +112,11 @@ install arch/*/src/cmd/ksh93/ksh93.static $RPM_BUILD_ROOT/bin
 install arch/*/src/cmd/ksh93/libksh.so.* $RPM_BUILD_ROOT/lib
 install arch/*/man/man1/sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ksh93.1
 
+%if %{?_with_binsh:1}%{!?_with_binsh:0}
+echo ".so ksh93.1" > $RPM_BUILD_ROOT%{_mandir}/man1/sh.1
+ln -sf ksh93 $RPM_BUILD_ROOT/bin/sh
+%endif
+
 cp -f lib/package/LICENSES/ast LICENSE
 gzip -9nf LICENSE
 
@@ -132,8 +137,16 @@ else
         	if [ "$SHNAME" = "/bin/ksh93" ]; then
                 	HAS_KSH=1
 	        fi
+%if %{?_with_binsh:1}%{!?_with_binsh:0}
+        	if [ "$SHNAME" = "/bin/sh" ]; then
+                	HAS_SH=1
+	        fi
+%endif
 	done < /etc/shells
 	[ -n "$HAS_KSH" ] || echo "/bin/ksh93" >> /etc/shells
+%if %{?_with_binsh:1}%{!?_with_binsh:0}
+	[ -n "$HAS_SH" ] || echo "/bin/sh" >> /etc/shells
+%endif
 fi
 
 %post static
@@ -152,6 +165,9 @@ fi
 if [ "$1" = "0" ]; then
 	while read SHNAME; do
 		[ "$SHNAME" = "/bin/ksh93" ] ||\
+%if %{?_with_binsh:1}%{!?_with_binsh:0}
+		[ "$SHNAME" = "/bin/sh" ] ||\
+%endif
 		echo "$SHNAME"
 	done < /etc/shells > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
@@ -177,6 +193,10 @@ fi
 %attr(755,root,root) /lib/libksh.so.*
 
 %{_mandir}/man1/*
+
+%if %{?_with_binsh:1}%{!?_with_binsh:0}
+%attr(755,root,root) /bin/sh
+%endif
 
 %if %{!?_without_static:1}%{?_without_static:0}
 %files static
