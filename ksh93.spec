@@ -2,7 +2,7 @@ Summary:	Original AT&T Korn Shell
 Summary(pl):	Oryginalny shell Korna z AT&T
 Name:		ksh93
 Version:	1.1
-Release:	2
+Release:	3
 License:	AT&T Open Source
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -12,6 +12,7 @@ Source1:	http://www.research.att.com/~gsf/download/tgz/ast-base.2001-01-01.0000.
 Source2:	%{name}-ldhack.sh
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-echo-e.patch
+Patch2:		%{name}-login.patch
 URL:		http://www.kornshell.com/
 %if %{!?_without_static:1}%{?_without_static:0}
 BuildRequires:	glibc-static
@@ -72,6 +73,7 @@ Ten pakiet zawiera statycznie zlinkowan± wersjê ksh93.
 %setup -q -c -a1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 install -m755 %{SOURCE2} ldhack.sh
 touch lib/package/gen/ast.license.accepted
 rm -f src/cmd/ksh93/Mamfile
