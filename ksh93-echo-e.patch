@@ -1,0 +1,36 @@
+--- ksh93-1.1/src/cmd/ksh93/bltins/print.c~	Tue Apr 18 16:53:31 2000
++++ ksh93-1.1/src/cmd/ksh93/bltins/print.c	Mon May 14 15:48:59 2001
+@@ -114,6 +114,7 @@
+    {
+ 	static char bsd_univ;
+ 	struct print prdata;
++	char **argvtmp;
+ 	prdata.options = sh_optecho+5;
+ 	prdata.raw = prdata.echon = 0;
+ 	prdata.sh = (Shell_t*)extra;
+@@ -130,9 +131,22 @@
+ 		return(b_print(0,argv,&prdata));
+ 	prdata.options = sh_optecho;
+ 	prdata.raw = 1;
+-	if(argv[1] && strcmp(argv[1],"-n")==0)
+-		prdata.echon = 1;
+-	return(b_print(0,argv+prdata.echon,&prdata));
++	argvtmp = argv;
++	while (argvtmp[1] && *argvtmp[1] == '-') {
++		register char *temp = argvtmp[1] + 1;
++		register int i;
++		for (i=0; temp[i]; i++) {
++			if (temp[i] == 'n')
++				prdata.echon = 1;
++			else if (temp[i] == 'e')
++				prdata.raw = 0;
++			else
++				goto just_echo;
++		}
++		argvtmp++;
++	}
++just_echo:
++	return(b_print(0,argvtmp,&prdata));
+    }
+ #endif /* SHOPT_ECHOPRINT */
+ 
