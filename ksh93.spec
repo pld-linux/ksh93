@@ -11,7 +11,9 @@ Release:	4
 License:	AT&T Open Source
 Group:		Applications/Shells
 Source0:	http://www.research.att.com/~gsf/download/tgz/INIT.2001-01-01.0000.tgz
+# Source0-md5:	799b061ff85c22e7efc9a3b9e610e5c6
 Source1:	http://www.research.att.com/~gsf/download/tgz/ast-base.2001-01-01.0000.tgz
+# Source1-md5:	9315343c62c278bfdcb155bca8316dd7
 Source2:	%{name}-ldhack.sh
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-echo-e.patch
