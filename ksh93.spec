@@ -31,10 +31,10 @@ a significant loss in performance. In addition, "sh" scripts can be
 run on KSH-93 without modification.
 
 %description -l pl
-KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez Morrisa
-Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell Korna jest
-kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z norm± IEEE
-P1003.2/ISO 9945.2.
+KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez
+Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell
+Korna jest kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z
+norm± IEEE P1003.2/ISO 9945.2.
 
 %package static
 Summary:	Statically linked Korn Shell
@@ -58,10 +58,10 @@ run on KSH-93 without modification.
 This packege contains statically linked version of ksh93.
 
 %description static -l pl
-KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez Morrisa
-Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell Korna jest
-kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z norm± IEEE
-P1003.2/ISO 9945.2.
+KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez
+Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell
+Korna jest kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z
+norm± IEEE P1003.2/ISO 9945.2.
 
 Ten pakiet zawiera statycznie zlinkowan± wersjê ksh93.
 
@@ -86,7 +86,7 @@ LC_ALL=POSIX; export LC_ALL
 # Yes this sucks, but that's the way (I'm too lazy to fix this stuff)
 CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
 CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
-CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 
+CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93
 
 cd arch/*/src/cmd/ksh93
 %{__cc} -o ksh93 pmain.o -L../../../lib -lksh \
