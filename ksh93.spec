@@ -39,7 +39,7 @@ kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z norm± IEEE
 P1003.2/ISO 9945.2.
 
 %package static
-Summary:	Staticly linked Korn Shell
+Summary:	Statically linked Korn Shell
 Summary(pl):	Statycznie zlinkowany shell Korna
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
