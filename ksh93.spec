@@ -59,7 +59,7 @@ medium-sized programming tasks can be performed at shell-level without
 a significant loss in performance. In addition, "sh" scripts can be
 run on KSH-93 without modification.
 
-This packege contains staticly linked version of ksh93.
+This packege contains statically linked version of ksh93.
 
 %description static -l pl
 KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez Morrisa
