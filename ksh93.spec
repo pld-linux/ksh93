@@ -116,15 +116,12 @@ ln -sf ksh93 $RPM_BUILD_ROOT/bin/sh
 %endif
 
 cp -f lib/package/LICENSES/ast LICENSE
-gzip -9nf LICENSE
 
 cd src/cmd/ksh93
 mv -f OBSOLETE OBSOLETE.mm
 groff -mm -Tascii OBSOLETE.mm > OBSOLETE
 groff -mm -Tascii sh.memo > memo.txt
 groff -mm -Tascii PROMO.mm > PROMO
-
-gzip -9nf COMPATIBILITY README RELEASE* builtins.mm OBSOLETE memo.txt PROMO
 
 %post
 /sbin/ldconfig
@@ -185,7 +182,8 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc src/cmd/ksh93/*.gz LICENSE.gz
+%doc src/cmd/ksh93/* LICENSE
+%doc COMPATIBILITY README RELEASE* builtins.mm OBSOLETE memo.txt PROMO
 
 %attr(755,root,root) /bin/ksh93
 %attr(755,root,root) /lib/libksh.so.*
