@@ -1,7 +1,8 @@
 Summary:	Original AT&T Korn Shell
+Summary(pl):	Oryginalny shell Korna z AT&T
 Name:		ksh93
 Version:	1.1
-Release:	1
+Release:	2
 License:	AT&T Open Source
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
@@ -28,8 +29,15 @@ medium-sized programming tasks can be performed at shell-level without
 a significant loss in performance. In addition, "sh" scripts can be
 run on KSH-93 without modification.
 
+%description -l pl
+KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez Morrisa
+Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell Korna jest
+kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z norm± IEEE
+P1003.2/ISO 9945.2.
+
 %package static
 Summary:	Staticly linked Korn Shell
+Summary(pl):	Statycznie zlinkowany shell Korna
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
@@ -48,7 +56,15 @@ medium-sized programming tasks can be performed at shell-level without
 a significant loss in performance. In addition, "sh" scripts can be
 run on KSH-93 without modification.
 
-This packege contains staticly linked version of pdksh.
+This packege contains staticly linked version of ksh93.
+
+%description static -l pl
+KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez Morrisa
+Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell Korna jest
+kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z norm± IEEE
+P1003.2/ISO 9945.2.
+
+Ten pakiet zawiera statycznie zlinkowan± wersjê ksh93.
 
 %prep
 %setup -q -c -a1
@@ -58,13 +74,19 @@ install -m755 %{SOURCE2} ldhack.sh
 touch lib/package/gen/ast.license.accepted
 rm -f src/cmd/ksh93/Mamfile
 
+# at some moment build stops using CCFLAGS - fix it:
+(cd src/cmd/nmake
+sed -e 's@CC_OPTIMIZE=\$optimize@CC_OPTIMIZE="%rpmcflags"@' make.probe > make.probe.n
+mv -f make.probe.n make.probe
+)
+
 %build
 LC_ALL=POSIX; export LC_ALL
 
 # Yes this sucks, but that's the way (I'm too lazy to fix this stuff)
-CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
-CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
-CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93
+CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
+CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
+CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 
 
 cd arch/*/src/cmd/ksh93
 %{__cc} -o ksh93 pmain.o -L../../../lib -lksh \
@@ -84,7 +106,7 @@ install arch/*/src/cmd/ksh93/ksh93.static $RPM_BUILD_ROOT/bin
 install arch/*/src/cmd/ksh93/libksh.so.* $RPM_BUILD_ROOT/lib
 install arch/*/man/man1/sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ksh93.1
 
-cp lib/package/LICENSES/ast LICENSE
+cp -f lib/package/LICENSES/ast LICENSE
 gzip -9nf LICENSE
 
 cd src/cmd/ksh93
