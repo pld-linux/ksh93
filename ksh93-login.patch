@@ -1,0 +1,41 @@
+diff -ur ksh93-1.1/src/cmd/ksh93/data/builtins.c ksh93-1.1.login/src/cmd/ksh93/data/builtins.c
+--- ksh93-1.1/src/cmd/ksh93/data/builtins.c	Thu Dec 14 17:17:06 2000
++++ ksh93-1.1.login/src/cmd/ksh93/data/builtins.c	Sat Jun 16 21:09:12 2001
+@@ -1215,6 +1215,7 @@
+ 	"option.]"
+ "[c?Read the commands from the first \aarg\a.]"
+ "[i?Specifies that the shell is interactive.]"
++"[l?Specifies that the shell is a login shell.]"
+ "[r?Invoke the shell in a restricted mode.  A restricted shell does not "
+ 	"permit any of the following:]{"
+ 	"[+-?Changing the working directory.]"
+diff -ur ksh93-1.1/src/cmd/ksh93/sh/args.c ksh93-1.1.login/src/cmd/ksh93/sh/args.c
+--- ksh93-1.1/src/cmd/ksh93/sh/args.c	Fri Oct 13 21:40:41 2000
++++ ksh93-1.1.login/src/cmd/ksh93/sh/args.c	Sat Jun 16 21:15:06 2001
+@@ -63,13 +63,13 @@
+ 
+ 
+ /* The following order is determined by sh_optset */
+-static  const char optksh[]     = "DircabefhkmnpstuvxC";
++static  const char optksh[]     = "DircabefhkmnpstuvxCl";
+ static const Shopt_t flagval[]  =
+ {
+ 	SH_DICTIONARY|SH_NOEXEC, SH_INTERACTIVE, SH_RESTRICTED, SH_CFLAG,
+ 	SH_ALLEXPORT, SH_NOTIFY, SH_ERREXIT, SH_NOGLOB, SH_TRACKALL,
+ 	SH_KEYWORD, SH_MONITOR, SH_NOEXEC, SH_PRIVILEGED, SH_SFLAG, SH_TFLAG,
+-	SH_NOUNSET, SH_VERBOSE,  SH_XTRACE, SH_NOCLOBBER,  0 
++	SH_NOUNSET, SH_VERBOSE,  SH_XTRACE, SH_NOCLOBBER, 0, 0 
+ };
+ 
+ /* ======== option handling	======== */
+@@ -136,6 +136,10 @@
+ 				errormsg(SH_DICT,2, e_option, opt_info.arg);
+ 				error_info.errors++;
+ 			}
++			break;
++		    case 'l':
++			sh.login_sh = 2;
++			opt = 0;
+ 			break;
+ 		    case 's':
+ 			if(setflag)
