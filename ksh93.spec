@@ -172,9 +172,9 @@ fi
 
 %{_mandir}/man1/*
 
-%{?bcond_off_static:#}%files static
-%{?bcond_off_static:#}%defattr(644,root,root,755)
-%{?bcond_off_static:#}%attr(755,root,root) /bin/ksh93.static
+%{?_without_static:#}%files static
+%{?_without_static:#}%defattr(644,root,root,755)
+%{?_without_static:#}%attr(755,root,root) /bin/ksh93.static
 
 %clean
 rm -rf $RPM_BUILD_ROOT
