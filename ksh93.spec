@@ -4,7 +4,7 @@
 # _with_binsh		- build with /bin/sh symlink
 #
 Summary:	Original AT&T Korn Shell
-Summary(pl):	Oryginalny shell Korna z AT&T
+Summary(pl):	Oryginalna pow³oka Korna z AT&T
 Name:		ksh93
 Version:	1.1
 Release:	4
@@ -41,13 +41,13 @@ run on KSH-93 without modification.
 
 %description -l pl
 KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez
-Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell
-Korna jest kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z
-norm± IEEE P1003.2/ISO 9945.2.
+Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Pow³oka
+Korna jest zgodna z "sh" (pow³ok± Bourne'a) i ma byæ zgodna z norm±
+IEEE P1003.2/ISO 9945.2.
 
 %package static
 Summary:	Statically linked Korn Shell
-Summary(pl):	Statycznie zlinkowany shell Korna
+Summary(pl):	Skonsolidowana statycznie pow³oka Korna
 Group:		Applications/Shells
 Requires:	%{name}
 Requires(preun):	fileutils
@@ -69,11 +69,11 @@ This packege contains statically linked version of ksh93.
 
 %description static -l pl
 KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez
-Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Shell
-Korna jest kompatybilny z "sh" (shellem Bourne) i ma byæ zgodny z
-norm± IEEE P1003.2/ISO 9945.2.
+Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Pow³oka
+Korna jest zgodna z "sh" (pow³ok± Bourne'a) i ma byæ zgodna z norm±
+IEEE P1003.2/ISO 9945.2.
 
-Ten pakiet zawiera statycznie zlinkowan± wersjê ksh93.
+Ten pakiet zawiera wersjê ksh93 skonsolidowan± statycznie.
 
 %prep
 %setup -q -c -a1
