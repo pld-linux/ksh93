@@ -7,7 +7,7 @@ Summary:	Original AT&T Korn Shell
 Summary(pl):	Oryginalna pow³oka Korna z AT&T
 Name:		ksh93
 Version:	1.1
-Release:	4
+Release:	5
 License:	AT&T Open Source
 Group:		Applications/Shells
 Source0:	http://www.research.att.com/~gsf/download/tgz/INIT.2001-01-01.0000.tgz
