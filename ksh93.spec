@@ -182,8 +182,8 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc src/cmd/ksh93/* LICENSE
-%doc COMPATIBILITY README RELEASE* builtins.mm OBSOLETE memo.txt PROMO
+%doc LICENSE
+%doc src/cmd/ksh93/{COMPATIBILITY,RE*,builtins.mm,OBSOLETE,memo.txt,PROMO}
 
 %attr(755,root,root) /bin/ksh93
 %attr(755,root,root) /lib/libksh.so.*
