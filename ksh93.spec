@@ -14,17 +14,17 @@ URL:		http://www.kornshell.com/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-KSH-93 is the most recent version of the KornShell Language described in
-"The KornShell Command and Programming Language," by Morris Bolsky and
-David Korn of AT&T Bell Laboratories, ISBN 0-13-182700-6.
-The KornShell is a shell programming language, which is upward compatible
-with "sh" (the Bourne Shell), and is intended to conform to
-the IEEE P1003.2/ISO 9945.2 Shell and Utilities standard.
-KSH-93 provides an enhanced programming environment in addition to
-the major command-entry features of the BSD shell "csh".  With KSH-93,
+KSH-93 is the most recent version of the KornShell Language described
+in "The KornShell Command and Programming Language," by Morris Bolsky
+and David Korn of AT&T Bell Laboratories, ISBN 0-13-182700-6. The
+KornShell is a shell programming language, which is upward compatible
+with "sh" (the Bourne Shell), and is intended to conform to the IEEE
+P1003.2/ISO 9945.2 Shell and Utilities standard. KSH-93 provides an
+enhanced programming environment in addition to the major
+command-entry features of the BSD shell "csh". With KSH-93,
 medium-sized programming tasks can be performed at shell-level without
-a significant loss in performance.
-In addition, "sh" scripts can be run on KSH-93 without modification.
+a significant loss in performance. In addition, "sh" scripts can be
+run on KSH-93 without modification.
 
 %package static
 Summary:	Staticly linked Korn Shell
@@ -34,17 +34,17 @@ Group(pl):	Aplikacje/Pow³oki
 Requires:	%{name}
 
 %description static
-KSH-93 is the most recent version of the KornShell Language described in
-"The KornShell Command and Programming Language," by Morris Bolsky and
-David Korn of AT&T Bell Laboratories, ISBN 0-13-182700-6.
-The KornShell is a shell programming language, which is upward compatible
-with "sh" (the Bourne Shell), and is intended to conform to
-the IEEE P1003.2/ISO 9945.2 Shell and Utilities standard.
-KSH-93 provides an enhanced programming environment in addition to
-the major command-entry features of the BSD shell "csh".  With KSH-93,
+KSH-93 is the most recent version of the KornShell Language described
+in "The KornShell Command and Programming Language," by Morris Bolsky
+and David Korn of AT&T Bell Laboratories, ISBN 0-13-182700-6. The
+KornShell is a shell programming language, which is upward compatible
+with "sh" (the Bourne Shell), and is intended to conform to the IEEE
+P1003.2/ISO 9945.2 Shell and Utilities standard. KSH-93 provides an
+enhanced programming environment in addition to the major
+command-entry features of the BSD shell "csh". With KSH-93,
 medium-sized programming tasks can be performed at shell-level without
-a significant loss in performance.
-In addition, "sh" scripts can be run on KSH-93 without modification.
+a significant loss in performance. In addition, "sh" scripts can be
+run on KSH-93 without modification.
 
 This packege contains staticly linked version of pdksh.
 
@@ -62,11 +62,11 @@ CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
 CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93
 
 cd arch/*/src/cmd/ksh93
-gcc -o ksh93 pmain.o -L../../../lib -lksh \
+%{__cc} -o ksh93 pmain.o -L../../../lib -lksh \
 	../../../lib/libdll.a -ldl ../../../lib/libcmd.a \
 	../../../lib/libast.a -lm
 
-gcc -static -o ksh93.static pmain.o -L../../../lib -lksh \
+%{__cc} -static -o ksh93.static pmain.o -L../../../lib -lksh \
 	../../../lib/libdll.a -ldl ../../../lib/libcmd.a \
 	../../../lib/libast.a -lm
 
