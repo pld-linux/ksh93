@@ -1,8 +1,8 @@
 Summary:	Original AT&T Korn Shell
 Name:		ksh93
 Version:	1.1
-Release:	0.1
-License:	Open Source
+Release:	1
+License:	AT&T Open Source
 Group:		Applications/Shells
 Group(de):	Applikationen/Shells
 Group(pl):	Aplikacje/Pow³oki
@@ -10,6 +10,7 @@ Source0:	http://www.research.att.com/~gsf/download/tgz/INIT.2001-01-01.0000.tgz
 Source1:	http://www.research.att.com/~gsf/download/tgz/ast-base.2001-01-01.0000.tgz
 Source2:	%{name}-ldhack.sh
 Patch0:		%{name}-build.patch
+Patch1:		%{name}-echo-e.patch
 URL:		http://www.kornshell.com/
 BuildRequires:	glibc-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -52,6 +53,7 @@ This packege contains staticly linked version of pdksh.
 %prep
 %setup -q -c -a1
 %patch0 -p1
+%patch1 -p1
 install -m755 %{SOURCE2} ldhack.sh
 touch lib/package/gen/ast.license.accepted
 rm -f src/cmd/ksh93/Mamfile
@@ -82,9 +84,11 @@ install arch/*/src/cmd/ksh93/ksh93.static $RPM_BUILD_ROOT/bin
 install arch/*/src/cmd/ksh93/libksh.so.* $RPM_BUILD_ROOT/lib
 install arch/*/man/man1/sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ksh93.1
 
+cp lib/package/LICENSES/ast LICENSE
+gzip -9nf LICENSE
+
 cd src/cmd/ksh93
 mv -f OBSOLETE OBSOLETE.mm
-
 groff -mm -Tascii OBSOLETE.mm > OBSOLETE
 groff -mm -Tascii sh.memo > memo.txt
 groff -mm -Tascii PROMO.mm > PROMO
@@ -139,7 +143,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc src/cmd/ksh93/*.gz
+%doc src/cmd/ksh93/*.gz LICENSE.gz
 
 %attr(755,root,root) /bin/ksh93
 %attr(755,root,root) /lib/libksh.so.*
