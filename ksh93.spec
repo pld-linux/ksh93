@@ -13,7 +13,9 @@ Source2:	%{name}-ldhack.sh
 Patch0:		%{name}-build.patch
 Patch1:		%{name}-echo-e.patch
 URL:		http://www.kornshell.com/
+%if %{!?_without_static:1}%{?_without_static:0}
 BuildRequires:	glibc-static
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -93,16 +95,20 @@ cd arch/*/src/cmd/ksh93
 	../../../lib/libdll.a -ldl ../../../lib/libcmd.a \
 	../../../lib/libast.a -lm
 
+%if %{!?_without_static:1}%{?_without_static:0}
 %{__cc} -static -o ksh93.static pmain.o -L../../../lib -lksh \
 	../../../lib/libdll.a -ldl ../../../lib/libcmd.a \
 	../../../lib/libast.a -lm
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_mandir}/man1,/lib,/bin,%{_sysconfdir}}
 
 install arch/*/src/cmd/ksh93/ksh93 $RPM_BUILD_ROOT/bin
+%if %{!?_without_static:1}%{?_without_static:0}
 install arch/*/src/cmd/ksh93/ksh93.static $RPM_BUILD_ROOT/bin
+%endif
 install arch/*/src/cmd/ksh93/libksh.so.* $RPM_BUILD_ROOT/lib
 install arch/*/man/man1/sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ksh93.1
 
@@ -172,9 +178,11 @@ fi
 
 %{_mandir}/man1/*
 
-%{?_without_static:#}%files static
-%{?_without_static:#}%defattr(644,root,root,755)
-%{?_without_static:#}%attr(755,root,root) /bin/ksh93.static
+%if %{!?_without_static:1}%{?_without_static:0}
+%files static
+%defattr(644,root,root,755)
+%attr(755,root,root) /bin/ksh93.static
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
