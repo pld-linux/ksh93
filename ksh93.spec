@@ -5,8 +5,6 @@ Version:	1.1
 Release:	3
 License:	AT&T Open Source
 Group:		Applications/Shells
-Group(de):	Applikationen/Shells
-Group(pl):	Aplikacje/Pow³oki
 Source0:	http://www.research.att.com/~gsf/download/tgz/INIT.2001-01-01.0000.tgz
 Source1:	http://www.research.att.com/~gsf/download/tgz/ast-base.2001-01-01.0000.tgz
 Source2:	%{name}-ldhack.sh
@@ -42,8 +40,6 @@ P1003.2/ISO 9945.2.
 Summary:	Statically linked Korn Shell
 Summary(pl):	Statycznie zlinkowany shell Korna
 Group:		Applications/Shells
-Group(de):	Applikationen/Shells
-Group(pl):	Aplikacje/Pow³oki
 Requires:	%{name}
 
 %description static
