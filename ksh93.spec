@@ -1,3 +1,8 @@
+#
+# Conditional build:
+# _without_static	- don't build static version
+# _with_binsh		- build with /bin/sh symlink
+#
 Summary:	Original AT&T Korn Shell
 Summary(pl):	Oryginalny shell Korna z AT&T
 Name:		ksh93
@@ -15,6 +20,8 @@ URL:		http://www.kornshell.com/
 %if %{!?_without_static:1}%{?_without_static:0}
 BuildRequires:	glibc-static
 %endif
+Requires(post):	/sbin/ldconfig
+Requires(preun):	fileutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -41,6 +48,7 @@ Summary:	Statically linked Korn Shell
 Summary(pl):	Statycznie zlinkowany shell Korna
 Group:		Applications/Shells
 Requires:	%{name}
+Requires(preun):	fileutils
 
 %description static
 KSH-93 is the most recent version of the KornShell Language described
@@ -75,18 +83,17 @@ touch lib/package/gen/ast.license.accepted
 rm -f src/cmd/ksh93/Mamfile
 
 # at some moment build stops using CCFLAGS - fix it:
-(cd src/cmd/nmake
-sed -e 's@CC_OPTIMIZE=\$optimize@CC_OPTIMIZE="%rpmcflags"@' make.probe > make.probe.n
+cd src/cmd/nmake
+sed -e 's@CC_OPTIMIZE=\$optimize@CC_OPTIMIZE="%{rpmcflags}"@' make.probe > make.probe.n
 mv -f make.probe.n make.probe
-)
 
 %build
 LC_ALL=POSIX; export LC_ALL
 
 # Yes this sucks, but that's the way (I'm too lazy to fix this stuff)
-CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
-CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
-CCFLAGS="%rpmcflags" LD="`pwd`/ldhack.sh" ./bin/package make ksh93
+CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
+CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93 || :
+CCFLAGS="%{rpmcflags}" LD="`pwd`/ldhack.sh" ./bin/package make ksh93
 
 cd arch/*/src/cmd/ksh93
 %{__cc} -o ksh93 pmain.o -L../../../lib -lksh \
@@ -124,17 +131,18 @@ groff -mm -Tascii sh.memo > memo.txt
 groff -mm -Tascii PROMO.mm > PROMO
 
 %post
+umask 022
 /sbin/ldconfig
 if [ ! -f /etc/shells ]; then
 	echo "/bin/ksh93" > /etc/shells
 else
 	while read SHNAME; do
-        	if [ "$SHNAME" = "/bin/ksh93" ]; then
-                	HAS_KSH=1
-	        fi
+		if [ "$SHNAME" = "/bin/ksh93" ]; then
+			HAS_KSH=1
+		fi
 %if %{?_with_binsh:1}%{!?_with_binsh:0}
-        	if [ "$SHNAME" = "/bin/sh" ]; then
-                	HAS_SH=1
+		if [ "$SHNAME" = "/bin/sh" ]; then
+			HAS_SH=1
 	        fi
 %endif
 	done < /etc/shells
@@ -144,19 +152,8 @@ else
 %endif
 fi
 
-%post static
-if [ ! -f /etc/shells ]; then
-	echo "/bin/ksh93.static" > /etc/shells
-else
-	while read SHNAME; do
-        	if [ "$SHNAME" = "/bin/ksh93.static" ]; then
-                	HAS_KSH_STATIC=1
-	        fi
-	done < /etc/shells
-	[ -n "$HAS_KSH_STATIC" ] || echo "/bin/ksh93.static" >> /etc/shells
-fi
-
 %preun
+umask 022
 if [ "$1" = "0" ]; then
 	while read SHNAME; do
 		[ "$SHNAME" = "/bin/ksh93" ] ||\
@@ -168,17 +165,30 @@ if [ "$1" = "0" ]; then
 	mv -f /etc/shells.new /etc/shells
 fi
 
+%postun	-p /sbin/ldconfig
+
+%post static
+umask 022
+if [ ! -f /etc/shells ]; then
+	echo "/bin/ksh93.static" > /etc/shells
+else
+	while read SHNAME; do
+        	if [ "$SHNAME" = "/bin/ksh93.static" ]; then
+                	HAS_KSH_STATIC=1
+	        fi
+	done < /etc/shells
+	[ -n "$HAS_KSH_STATIC" ] || echo "/bin/ksh93.static" >> /etc/shells
+fi
+
 %preun static
+umask 022
 if [ "$1" = "0" ]; then
 	while read SHNAME; do
 		[ "$SHNAME" = "/bin/ksh93.static" ] ||\
 		echo "$SHNAME"
-	done
+	done < /etc/shells > /etc/shells.new
 	mv -f /etc/shells.new /etc/shells
 fi
-
-%postun
-/sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
