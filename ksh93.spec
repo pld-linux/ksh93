@@ -11,6 +11,7 @@ Source1:	http://www.research.att.com/~gsf/download/tgz/ast-base.2001-01-01.0000.
 Source2:	%{name}-ldhack.sh
 Patch0:		%{name}-build.patch
 URL:		http://www.kornshell.com/
+BuildRequires:	glibc-static
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
