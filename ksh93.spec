@@ -145,7 +145,7 @@ else
 %if %{?_with_binsh:1}%{!?_with_binsh:0}
 		if [ "$SHNAME" = "/bin/sh" ]; then
 			HAS_SH=1
-	        fi
+		fi
 %endif
 	done < /etc/shells
 	[ -n "$HAS_KSH" ] || echo "/bin/ksh93" >> /etc/shells
@@ -175,9 +175,9 @@ if [ ! -f /etc/shells ]; then
 	echo "/bin/ksh93.static" > /etc/shells
 else
 	while read SHNAME; do
-        	if [ "$SHNAME" = "/bin/ksh93.static" ]; then
-                	HAS_KSH_STATIC=1
-	        fi
+		if [ "$SHNAME" = "/bin/ksh93.static" ]; then
+			HAS_KSH_STATIC=1
+		fi
 	done < /etc/shells
 	[ -n "$HAS_KSH_STATIC" ] || echo "/bin/ksh93.static" >> /etc/shells
 fi
