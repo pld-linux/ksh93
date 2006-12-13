@@ -1,7 +1,7 @@
 #
 # Conditional build:
-# _without_static	- don't build static version
-# _with_binsh		- build with /bin/sh symlink
+%bcond_without		static		# don't build static version
+%bcond_with		binsh		# build with /bin/sh symlink
 #
 Summary:	Original AT&T Korn Shell
 Summary(pl):	Oryginalna pow³oka Korna z AT&T
@@ -19,7 +19,7 @@ Patch0:		%{name}-build.patch
 Patch1:		%{name}-echo-e.patch
 Patch2:		%{name}-login.patch
 URL:		http://www.kornshell.com/
-%if %{!?_without_static:1}%{?_without_static:0}
+%if %{with static}
 BuildRequires:	glibc-static
 %endif
 Requires(post):	/sbin/ldconfig
@@ -102,7 +102,7 @@ cd arch/*/src/cmd/ksh93
 	../../../lib/libdll.a -ldl ../../../lib/libcmd.a \
 	../../../lib/libast.a -lm
 
-%if %{!?_without_static:1}%{?_without_static:0}
+%if %{with static}
 %{__cc} -static -o ksh93.static pmain.o -L../../../lib -lksh \
 	../../../lib/libdll.a -ldl ../../../lib/libcmd.a \
 	../../../lib/libast.a -lm
@@ -113,13 +113,13 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_mandir}/man1,/lib,/bin,%{_sysconfdir}}
 
 install arch/*/src/cmd/ksh93/ksh93 $RPM_BUILD_ROOT/bin
-%if %{!?_without_static:1}%{?_without_static:0}
+%if %{with static}
 install arch/*/src/cmd/ksh93/ksh93.static $RPM_BUILD_ROOT/bin
 %endif
 install arch/*/src/cmd/ksh93/libksh.so.* $RPM_BUILD_ROOT/lib
 install arch/*/man/man1/sh.1 $RPM_BUILD_ROOT%{_mandir}/man1/ksh93.1
 
-%if %{?_with_binsh:1}%{!?_with_binsh:0}
+%if %{with binsh}
 echo ".so ksh93.1" > $RPM_BUILD_ROOT%{_mandir}/man1/sh.1
 ln -sf ksh93 $RPM_BUILD_ROOT/bin/sh
 %endif
@@ -142,14 +142,14 @@ else
 		if [ "$SHNAME" = "/bin/ksh93" ]; then
 			HAS_KSH=1
 		fi
-%if %{?_with_binsh:1}%{!?_with_binsh:0}
+%if %{with binsh}
 		if [ "$SHNAME" = "/bin/sh" ]; then
 			HAS_SH=1
 		fi
 %endif
 	done < /etc/shells
 	[ -n "$HAS_KSH" ] || echo "/bin/ksh93" >> /etc/shells
-%if %{?_with_binsh:1}%{!?_with_binsh:0}
+%if %{with binsh}
 	[ -n "$HAS_SH" ] || echo "/bin/sh" >> /etc/shells
 %endif
 fi
@@ -159,7 +159,7 @@ umask 022
 if [ "$1" = "0" ]; then
 	while read SHNAME; do
 		[ "$SHNAME" = "/bin/ksh93" ] ||\
-%if %{?_with_binsh:1}%{!?_with_binsh:0}
+%if %{with binsh}
 		[ "$SHNAME" = "/bin/sh" ] ||\
 %endif
 		echo "$SHNAME"
@@ -202,11 +202,11 @@ fi
 
 %{_mandir}/man1/*
 
-%if %{?_with_binsh:1}%{!?_with_binsh:0}
+%if %{with binsh}
 %attr(755,root,root) /bin/sh
 %endif
 
-%if %{!?_without_static:1}%{?_without_static:0}
+%if %{with static}
 %files static
 %defattr(644,root,root,755)
 %attr(755,root,root) /bin/ksh93.static
