@@ -4,7 +4,7 @@
 %bcond_with		binsh		# build with /bin/sh symlink
 #
 Summary:	Original AT&T Korn Shell
-Summary(pl):	Oryginalna pow³oka Korna z AT&T
+Summary(pl.UTF-8):   Oryginalna powÅ‚oka Korna z AT&T
 Name:		ksh93
 Version:	1.1
 Release:	5
@@ -39,15 +39,15 @@ medium-sized programming tasks can be performed at shell-level without
 a significant loss in performance. In addition, "sh" scripts can be
 run on KSH-93 without modification.
 
-%description -l pl
-KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez
-Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Pow³oka
-Korna jest zgodna z "sh" (pow³ok± Bourne'a) i ma byæ zgodna z norm±
+%description -l pl.UTF-8
+KSH-93 jest najÅ›wieÅ¼szÄ… wersjÄ… jÄ™zyka KornShell opisanego przez
+Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. PowÅ‚oka
+Korna jest zgodna z "sh" (powÅ‚okÄ… Bourne'a) i ma byÄ‡ zgodna z normÄ…
 IEEE P1003.2/ISO 9945.2.
 
 %package static
 Summary:	Statically linked Korn Shell
-Summary(pl):	Skonsolidowana statycznie pow³oka Korna
+Summary(pl.UTF-8):   Skonsolidowana statycznie powÅ‚oka Korna
 Group:		Applications/Shells
 Requires:	%{name}
 Requires(preun):	fileutils
@@ -67,13 +67,13 @@ run on KSH-93 without modification.
 
 This packege contains statically linked version of ksh93.
 
-%description static -l pl
-KSH-93 jest naj¶wie¿sz± wersj± jêzyka KornShell opisanego przez
-Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. Pow³oka
-Korna jest zgodna z "sh" (pow³ok± Bourne'a) i ma byæ zgodna z norm±
+%description static -l pl.UTF-8
+KSH-93 jest najÅ›wieÅ¼szÄ… wersjÄ… jÄ™zyka KornShell opisanego przez
+Morrisa Blolsky'ego i Davida Korna z AT&T Bell Laboratories. PowÅ‚oka
+Korna jest zgodna z "sh" (powÅ‚okÄ… Bourne'a) i ma byÄ‡ zgodna z normÄ…
 IEEE P1003.2/ISO 9945.2.
 
-Ten pakiet zawiera wersjê ksh93 skonsolidowan± statycznie.
+Ten pakiet zawiera wersjÄ™ ksh93 skonsolidowanÄ… statycznie.
 
 %prep
 %setup -q -c -a1
