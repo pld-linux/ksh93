@@ -4,7 +4,7 @@
 %bcond_with		binsh		# build with /bin/sh symlink
 #
 Summary:	Original AT&T Korn Shell
-Summary(pl.UTF-8):   Oryginalna powłoka Korna z AT&T
+Summary(pl.UTF-8):	Oryginalna powłoka Korna z AT&T
 Name:		ksh93
 Version:	1.1
 Release:	5
@@ -47,7 +47,7 @@ IEEE P1003.2/ISO 9945.2.
 
 %package static
 Summary:	Statically linked Korn Shell
-Summary(pl.UTF-8):   Skonsolidowana statycznie powłoka Korna
+Summary(pl.UTF-8):	Skonsolidowana statycznie powłoka Korna
 Group:		Applications/Shells
 Requires:	%{name}
 Requires(preun):	fileutils
