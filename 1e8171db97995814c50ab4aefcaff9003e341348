@@ -1,0 +1,2 @@
+set LC_ALL to POSIX in %%build. Need to compile it properly in localized
+environment.
